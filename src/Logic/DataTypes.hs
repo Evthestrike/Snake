@@ -1,4 +1,4 @@
-module DataTypes
+module Logic.DataTypes
   ( Coord,
     Direction (North, South, East, West),
     Snake (Snake),

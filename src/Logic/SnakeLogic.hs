@@ -1,8 +1,8 @@
-module SnakeLogic () where
+module Logic.SnakeLogic () where
 
-import qualified Constants
 import Data.List (nub)
-import DataTypes
+import qualified Logic.Constants as Constants
+import Logic.DataTypes
 
 inBounds :: Int -> Int -> Snake -> Bool
 inBounds width height (Snake _ coords) = xInBounds && yInBounds

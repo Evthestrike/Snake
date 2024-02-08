@@ -1,4 +1,4 @@
-module Constants
+module Logic.Constants
   ( width,
     height,
   )
