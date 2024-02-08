@@ -6,7 +6,7 @@ A simple Snake clone written in Haskell using the Brick terminal UI library.
 
 Ensure that the latest version of stack is installed on your system.
 
-From the top-level repository run this command in the terminal:
+From the top-level repository folder run this command in the terminal:
 
 ```bash
 stack run
