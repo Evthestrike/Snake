@@ -1,4 +1,4 @@
-module Graphics.RenderGrid () where
+module Graphics.RenderGrid (grid) where
 
 import Brick
 import Control.Lens
