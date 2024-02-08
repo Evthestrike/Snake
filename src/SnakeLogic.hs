@@ -16,3 +16,9 @@ noCollisions (Snake _ coords) = nub coords == coords
 
 snakeIsLegal :: Snake -> Bool
 snakeIsLegal = (&&) <$> inBounds Constants.width Constants.height <*> noCollisions
+
+moveSnake :: Snake -> Snake
+moveSnake (Snake direction coords) = Snake direction newCoords
+  where
+    headCoord = head coords
+    newCoords = moveCoord direction headCoord : init coords
