@@ -24,6 +24,7 @@ dependencies:
   - Cabal
   - brick
   - lens
+  - vty
 
 ghc-options:
   - -Wall
