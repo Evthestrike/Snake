@@ -7,13 +7,12 @@ module DataTypes
 where
 
 import Data.Bifunctor
-import Data.List.NonEmpty (NonEmpty)
 
 type Coord = (Int, Int)
 
 data Direction = North | South | East | West deriving (Show, Read)
 
-data Snake = Snake Direction (NonEmpty Coord) deriving (Show, Read)
+data Snake = Snake Direction [Coord] deriving (Show, Read)
 
 moveCoords :: Direction -> Coord -> Coord
 moveCoords North = second (+ (-1))
