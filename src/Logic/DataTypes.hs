@@ -1,7 +1,7 @@
 module Logic.DataTypes
   ( Coord,
     Direction (North, South, East, West),
-    Snake (Snake),
+    Snake (Snake, direction, coords),
     AppState (AppState, randGen, appleCoord, snake),
     moveCoord,
   )
@@ -14,7 +14,7 @@ type Coord = (Int, Int)
 
 data Direction = North | South | East | West deriving (Show, Read, Eq)
 
-data Snake = Snake Direction [Coord] deriving (Show, Read)
+data Snake = Snake {direction :: Direction, coords :: [Coord]} deriving (Show, Read)
 
 data AppState = AppState {randGen :: StdGen, appleCoord :: Coord, snake :: Snake}
 
