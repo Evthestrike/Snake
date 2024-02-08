@@ -1,6 +1,7 @@
 module Logic.SnakeLogic
   ( moveSnake,
     snakeIsLegal,
+    turnHead,
   )
 where
 
@@ -26,3 +27,22 @@ moveSnake (Snake direction coords) = Snake direction newCoords
   where
     headCoord = head coords
     newCoords = moveCoord direction headCoord : init coords
+
+turnHead :: Direction -> Snake -> Snake
+turnHead newDirection (Snake direction coords) = case newDirection of
+  North ->
+    if direction == South
+      then Snake direction coords
+      else Snake North coords
+  South ->
+    if direction == North
+      then Snake direction coords
+      else Snake South coords
+  East ->
+    if direction == West
+      then Snake direction coords
+      else Snake East coords
+  West ->
+    if direction == East
+      then Snake direction coords
+      else Snake West coords
