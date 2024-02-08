@@ -10,16 +10,14 @@ import qualified Logic.Constants as Constants
 import Logic.DataTypes
 import Logic.SnakeLogic
 
-data AppState = AppState {snake :: Snake}
-
 data Tick = Tick
 
-app :: App Snake Tick ()
+app :: App AppState Tick ()
 app = App ((: []) . grid Constants.width Constants.height) (\_ _ -> Nothing) handleEvent (return ()) (const . attrMap defAttr $ [])
 
-handleEvent :: BrickEvent n Tick -> EventM n Snake ()
+handleEvent :: BrickEvent n Tick -> EventM n AppState ()
 handleEvent e = do
-  (Snake direction coords) <- get
+  (AppState {snake = Snake direction coords}) <- get
   let newSnake = case e of
         AppEvent Tick -> moveSnake . Snake direction $ coords
         VtyEvent (EvKey KUp _) ->
@@ -44,7 +42,7 @@ handleEvent e = do
     VtyEvent (EvKey KEsc _) -> halt
     _ ->
       if snakeIsLegal newSnake
-        then put newSnake
+        then put . AppState $ newSnake
         else halt
 
 main :: IO ()
@@ -52,8 +50,8 @@ main = do
   eventChan <- newBChan 10
   let buildVty = mkVty defaultConfig
   initialVty <- buildVty
-  forkIO . forever $ do
+  _ <- forkIO . forever $ do
     writeBChan eventChan Tick
     threadDelay 100000
-  customMain initialVty buildVty (Just eventChan) app (Snake East $ [(0, 0)])
+  _ <- customMain initialVty buildVty (Just eventChan) app (AppState . Snake East $ [(0, 0)])
   return ()
