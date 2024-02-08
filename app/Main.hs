@@ -9,6 +9,7 @@ import Control.Concurrent (forkIO, threadDelay)
 import Control.Monad
 import Graphics.RenderGrid
 import Graphics.Vty
+import qualified Logic.Constants as Constanst
 import qualified Logic.Constants as Constants
 import Logic.DataTypes
 import Logic.SnakeLogic
@@ -23,18 +24,34 @@ handleEvent :: BrickEvent n Tick -> EventM n AppState ()
 handleEvent e = do
   (AppState {snake, ..}) <- get
   let newSnake = case e of
-        AppEvent Tick -> moveSnake snake
+        AppEvent Tick ->
+          if (head . coords . growSnake $ snake) == appleCoord
+            then growSnake snake
+            else moveSnake snake
         VtyEvent (EvKey KUp _) -> turnHead North snake
         VtyEvent (EvKey KDown _) -> turnHead South snake
         VtyEvent (EvKey KRight _) -> turnHead East snake
         VtyEvent (EvKey KLeft _) -> turnHead West snake
         _ -> snake
+      (newGen, newAppleCoord) =
+        if (head . coords $ newSnake) == appleCoord
+          then
+            let (newAppleX, newGen) = uniformR (0, Constants.width - 1) randGen
+                (newAppleY, newGen') = uniformR (0, Constants.height - 1) newGen
+             in (newGen', (newAppleX, newAppleY))
+          else (randGen, appleCoord)
+      newAppState =
+        AppState
+          { randGen = newGen,
+            appleCoord = newAppleCoord,
+            snake = newSnake
+          }
 
   case e of
     VtyEvent (EvKey KEsc _) -> halt
     _ ->
       if snakeIsLegal newSnake
-        then put AppState {snake = newSnake, ..}
+        then put newAppState
         else halt
 
 main :: IO ()
