@@ -10,7 +10,7 @@ import Data.Bifunctor (Bifunctor (first, second))
 
 type Coord = (Int, Int)
 
-data Direction = North | South | East | West deriving (Show, Read)
+data Direction = North | South | East | West deriving (Show, Read, Eq)
 
 data Snake = Snake Direction [Coord] deriving (Show, Read)
 
