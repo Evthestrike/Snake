@@ -12,7 +12,7 @@ type Coords = (Int, Int)
 
 data Direction = North | South | East | West deriving (Show, Read)
 
-data Snake = Snake Direction Coords deriving (Show, Read)
+data Snake = Snake Direction [Coords] deriving (Show, Read)
 
 moveCoords :: Direction -> Coords -> Coords
 moveCoords North = second (+ (-1))
