@@ -1,4 +1,8 @@
-module Logic.SnakeLogic () where
+module Logic.SnakeLogic
+  ( moveSnake,
+    snakeIsLegal,
+  )
+where
 
 import Data.List (nub)
 import qualified Logic.Constants as Constants
