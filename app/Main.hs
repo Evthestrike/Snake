@@ -1,3 +1,6 @@
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE RecordWildCards #-}
+
 module Main (main) where
 
 import Brick
@@ -9,6 +12,7 @@ import Graphics.Vty
 import qualified Logic.Constants as Constants
 import Logic.DataTypes
 import Logic.SnakeLogic
+import System.Random
 
 data Tick = Tick
 
@@ -17,32 +21,20 @@ app = App ((: []) . grid Constants.width Constants.height) (\_ _ -> Nothing) han
 
 handleEvent :: BrickEvent n Tick -> EventM n AppState ()
 handleEvent e = do
-  (AppState {snake = Snake direction coords}) <- get
+  (AppState {snake, ..}) <- get
   let newSnake = case e of
-        AppEvent Tick -> moveSnake . Snake direction $ coords
-        VtyEvent (EvKey KUp _) ->
-          if direction == South
-            then Snake direction coords
-            else Snake North coords
-        VtyEvent (EvKey KDown _) ->
-          if direction == North
-            then Snake direction coords
-            else Snake South coords
-        VtyEvent (EvKey KRight _) ->
-          if direction == West
-            then Snake direction coords
-            else Snake East coords
-        VtyEvent (EvKey KLeft _) ->
-          if direction == East
-            then Snake direction coords
-            else Snake West coords
-        _ -> Snake direction coords
+        AppEvent Tick -> moveSnake snake
+        VtyEvent (EvKey KUp _) -> turnHead North snake
+        VtyEvent (EvKey KDown _) -> turnHead South snake
+        VtyEvent (EvKey KRight _) -> turnHead East snake
+        VtyEvent (EvKey KLeft _) -> turnHead West snake
+        _ -> snake
 
   case e of
     VtyEvent (EvKey KEsc _) -> halt
     _ ->
       if snakeIsLegal newSnake
-        then put . AppState $ newSnake
+        then put AppState {snake = newSnake, ..}
         else halt
 
 main :: IO ()
@@ -53,5 +45,6 @@ main = do
   _ <- forkIO . forever $ do
     writeBChan eventChan Tick
     threadDelay 100000
-  _ <- customMain initialVty buildVty (Just eventChan) app (AppState . Snake East $ [(0, 0)])
+  initGen <- initStdGen
+  _ <- customMain initialVty buildVty (Just eventChan) app (AppState {randGen = initGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]})
   return ()
