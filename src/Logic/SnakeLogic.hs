@@ -1,5 +1,6 @@
 module Logic.SnakeLogic
-  ( moveSnake,
+  ( growSnake,
+    moveSnake,
     snakeIsLegal,
     turnHead,
   )
@@ -22,11 +23,16 @@ noCollisions (Snake _ coords) = nub coords == coords
 snakeIsLegal :: Snake -> Bool
 snakeIsLegal = (&&) <$> inBounds Constants.width Constants.height <*> noCollisions
 
-moveSnake :: Snake -> Snake
-moveSnake (Snake direction coords) = Snake direction newCoords
+growSnake :: Snake -> Snake
+growSnake (Snake direction coords) = Snake direction newCoords
   where
     headCoord = head coords
-    newCoords = moveCoord direction headCoord : init coords
+    newCoords = moveCoord direction headCoord : coords
+
+moveSnake :: Snake -> Snake
+moveSnake snake = Snake direction (init coords)
+  where
+    (Snake direction coords) = growSnake snake
 
 turnHead :: Direction -> Snake -> Snake
 turnHead newDirection (Snake direction coords) = case newDirection of
