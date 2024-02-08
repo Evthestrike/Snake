@@ -7,7 +7,9 @@ import Control.Lens
 import Logic.DataTypes
 
 grid :: Int -> Int -> AppState -> Widget ()
-grid width height (AppState {snake}) = vBox . map (hBox . map str) . snakeToStringArray width height $ snake
+grid width height (AppState {snake, appleCoord = (appleX, appleY)}) = vBox . map (hBox . map str) . addApple . snakeToStringArray width height $ snake
+  where
+    addApple = ix appleY . ix appleX .~ "@"
 
 snakeToStringArray :: Int -> Int -> Snake -> [[String]]
 snakeToStringArray width height (Snake _ coords) = foldr (\x acc -> x acc) (blankArray & ix headY . ix headX .~ "0") setters
