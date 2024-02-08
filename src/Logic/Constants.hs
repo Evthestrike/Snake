@@ -5,7 +5,7 @@ module Logic.Constants
 where
 
 width :: Int
-width = 8
+width = 12
 
 height :: Int
-height = 8
+height = 12
