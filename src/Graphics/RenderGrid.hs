@@ -1,11 +1,13 @@
+{-# LANGUAGE NamedFieldPuns #-}
+
 module Graphics.RenderGrid (grid) where
 
 import Brick
 import Control.Lens
 import Logic.DataTypes
 
-grid :: Int -> Int -> Snake -> Widget ()
-grid width height = vBox . map (hBox . map str) . snakeToStringArray width height
+grid :: Int -> Int -> AppState -> Widget ()
+grid width height (AppState {snake}) = vBox . map (hBox . map str) . snakeToStringArray width height $ snake
 
 snakeToStringArray :: Int -> Int -> Snake -> [[String]]
 snakeToStringArray width height (Snake _ coords) = foldr (\x acc -> x acc) (blankArray & ix headY . ix headX .~ "0") setters
