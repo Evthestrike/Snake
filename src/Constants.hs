@@ -4,8 +4,8 @@ module Constants
   )
 where
 
-width :: Integer
+width :: Int
 width = 8
 
-height :: Integer
+height :: Int
 height = 8

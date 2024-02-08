@@ -14,4 +14,5 @@ inBounds width height (Snake _ coords) = xInBounds && yInBounds
 noCollisions :: Snake -> Bool
 noCollisions (Snake _ coords) = nub coords == coords
 
+snakeIsLegal :: Snake -> Bool
 snakeIsLegal = (&&) <$> inBounds Constants.width Constants.height <*> noCollisions
