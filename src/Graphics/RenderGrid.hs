@@ -4,17 +4,31 @@ module Graphics.RenderGrid (grid) where
 
 import Brick
 import Control.Lens
+import qualified Graphics.Assets as Assets
 import Logic.DataTypes
 
 grid :: Int -> Int -> AppState -> Widget ()
-grid width height (AppState {snake, appleCoord = (appleX, appleY)}) = vBox . map (hBox . map str) . addApple . snakeToStringArray width height $ snake
+grid width height (AppState {snake, appleCoord = (appleX, appleY)}) =
+  vBox
+    . map (hBox . map colorStr)
+    . addApple
+    . snakeToStringArray width height
+    $ snake
   where
-    addApple = ix appleY . ix appleX .~ "@"
+    addApple = ix appleY . ix appleX .~ Assets.appleStr
+
+colorStr :: String -> Widget n
+colorStr s
+  | s == Assets.headStr = withAttr Assets.headAttr . str $ s
+  | s == Assets.bodyStr = withAttr Assets.bodyAttr . str $ s
+  | s == Assets.appleStr = withAttr Assets.appleAttr . str $ s
+  | s == Assets.groundStr = withAttr Assets.groundAttr . str $ s
+  | otherwise = str s
 
 snakeToStringArray :: Int -> Int -> Snake -> [[String]]
-snakeToStringArray width height (Snake _ coords) = foldr (\x acc -> x acc) (blankArray & ix headY . ix headX .~ "0") setters
+snakeToStringArray width height (Snake _ coords) = foldr (\x acc -> x acc) (blankArray & ix headY . ix headX .~ Assets.headStr) setters
   where
     (headX, headY) = head coords
-    blankArray = replicate height (replicate width ".")
+    blankArray = replicate height (replicate width Assets.groundStr)
     setters :: [[[String]] -> [[String]]]
-    setters = map (\(x, y) xs -> xs & ix y . ix x .~ "o") . tail $ coords
+    setters = map (\(x, y) xs -> xs & ix y . ix x .~ Assets.bodyStr) . tail $ coords
