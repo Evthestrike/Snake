@@ -5,11 +5,13 @@ module Main (main) where
 
 import Brick
 import Brick.BChan (newBChan, writeBChan)
+import Brick.Widgets.Border (borderWithLabel)
+import Brick.Widgets.Center (center)
 import Control.Concurrent (forkIO, threadDelay)
 import Control.Monad
+import qualified Graphics.Assets as Assets
 import Graphics.RenderGrid
 import Graphics.Vty
-import qualified Logic.Constants as Constanst
 import qualified Logic.Constants as Constants
 import Logic.DataTypes
 import Logic.SnakeLogic
@@ -18,7 +20,19 @@ import System.Random
 data Tick = Tick
 
 app :: App AppState Tick ()
-app = App ((: []) . grid Constants.width Constants.height) (\_ _ -> Nothing) handleEvent (return ()) (const . attrMap defAttr $ [])
+app =
+  App
+    ((: []) . center . borderWithLabel (str "Snake") . grid Constants.width Constants.height)
+    (\_ _ -> Nothing)
+    handleEvent
+    (return ())
+    ( const . attrMap defAttr $
+        [ (Assets.headAttr, fg brightGreen),
+          (Assets.bodyAttr, fg green),
+          (Assets.appleAttr, fg red),
+          (Assets.groundAttr, fg white)
+        ]
+    )
 
 handleEvent :: BrickEvent n Tick -> EventM n AppState ()
 handleEvent e = do
