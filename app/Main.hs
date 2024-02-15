@@ -71,11 +71,9 @@ handleEvent e = do
 main :: IO ()
 main = do
   eventChan <- newBChan 10
-  let buildVty = mkVty defaultConfig
-  initialVty <- buildVty
   _ <- forkIO . forever $ do
     writeBChan eventChan Tick
     threadDelay 100000
   initGen <- initStdGen
-  _ <- customMain initialVty buildVty (Just eventChan) app (AppState {randGen = initGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]})
+  _ <- customMainWithDefaultVty (Just eventChan) app (AppState {randGen = initGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]})
   return ()
