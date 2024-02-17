@@ -25,7 +25,6 @@ dependencies:
   - brick
   - lens
   - vty
-  - vty-windows
   - random
 
 ghc-options:
