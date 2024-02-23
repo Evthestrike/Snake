@@ -39,7 +39,8 @@ ghc-options:
   - -Wredundant-constraints
 
 library:
-  source-dirs: src
+  source-dirs:
+    - src
 
 executables:
   Snake-exe:
