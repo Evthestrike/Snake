@@ -7,8 +7,8 @@ import Control.Lens
 import qualified Graphics.Assets as Assets
 import Logic.DataTypes
 
-grid :: Int -> Int -> AppState -> Widget ()
-grid width height (AppState {snake, appleCoord = (appleX, appleY)}) =
+grid :: Int -> Int -> GameState -> Widget ()
+grid width height (GameState {snake, appleCoord = (appleX, appleY)}) =
   vBox
     . map (hBox . map colorStr)
     . addApple
