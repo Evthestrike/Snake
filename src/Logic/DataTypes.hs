@@ -4,6 +4,7 @@ module Logic.DataTypes
     Snake (Snake, direction, coords),
     GameState (GameState, randGen, appleCoord, snake),
     AppMachine (Game),
+    Tick (Tick),
     moveCoord,
   )
 where
@@ -22,6 +23,8 @@ moveCoord East = first (+ 1)
 moveCoord West = first (+ (-1))
 
 data Snake = Snake {direction :: Direction, coords :: [Coord]} deriving (Show, Read)
+
+data Tick = Tick
 
 data GameState = GameState {randGen :: StdGen, appleCoord :: Coord, snake :: Snake}
 

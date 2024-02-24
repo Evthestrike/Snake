@@ -1,7 +1,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module App where
+module App (app, initialState) where
 
 import Brick
 import Brick.Widgets.Border
@@ -13,8 +13,6 @@ import qualified Logic.Constants as Constants
 import Logic.DataTypes
 import Logic.SnakeLogic
 import System.Random
-
-data Tick = Tick
 
 initialState :: StdGen -> AppMachine
 initialState initRandGen = Game $ GameState {randGen = initRandGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]}
