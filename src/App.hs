@@ -35,6 +35,7 @@ app =
         ]
     )
 
+handleGameEvent :: GameState -> BrickEvent n Tick -> EventM n AppMachine ()
 handleGameEvent (GameState {..}) e = do
   let newSnake = case e of
         AppEvent Tick ->
@@ -49,9 +50,9 @@ handleGameEvent (GameState {..}) e = do
       (newGen, newAppleCoord) =
         if (head . coords $ newSnake) == appleCoord
           then
-            let (newAppleX, newGen) = uniformR (0, Constants.width - 1) randGen
-                (newAppleY, newGen') = uniformR (0, Constants.height - 1) newGen
-             in (newGen', (newAppleX, newAppleY))
+            let (newAppleX, randGen') = uniformR (0, Constants.width - 1) randGen
+                (newAppleY, randGen'') = uniformR (0, Constants.height - 1) randGen'
+             in (randGen'', (newAppleX, newAppleY))
           else (randGen, appleCoord)
       newAppState =
         Game $
@@ -68,8 +69,12 @@ handleGameEvent (GameState {..}) e = do
         then put newAppState
         else halt
 
+handleMenuEvent :: MenuState -> BrickEvent n Tick -> EventM n AppMachine ()
+handleMenuEvent menuState e = pure ()
+
 handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
 handleEvent e = do
   appState <- get
   case appState of
     (Game gameState) -> handleGameEvent gameState e
+    (Menu menuState) -> handleMenuEvent menuState e
