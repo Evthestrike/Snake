@@ -3,7 +3,9 @@ module Logic.DataTypes
     Direction (North, South, East, West),
     Snake (Snake, direction, coords),
     GameState (GameState, randGen, appleCoord, snake),
-    AppMachine (Game),
+    MenuOptions (Play, Quit),
+    MenuState (MenuState, menuOptions, selected),
+    AppMachine (Game, Menu),
     Tick (Tick),
     moveCoord,
   )
@@ -28,6 +30,8 @@ data Tick = Tick
 
 data GameState = GameState {randGen :: StdGen, appleCoord :: Coord, snake :: Snake}
 
-data MenuState = MenuState {}
+data MenuOptions = Play | Quit
+
+data MenuState = MenuState {menuOptions :: [MenuOptions], selected :: Int}
 
 data AppMachine = Game GameState | Menu MenuState
