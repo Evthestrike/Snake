@@ -15,3 +15,10 @@ headAttr = attrName "head"
 bodyAttr = attrName "body"
 groundAttr = attrName "ground"
 appleAttr = attrName "apple"
+
+playStr, quitStr :: String
+playStr = "Play"
+quitStr = "Quit"
+
+selectedAttr :: AttrName
+selectedAttr = attrName "selected"
