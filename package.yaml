@@ -26,6 +26,7 @@ dependencies:
   - lens
   - vty
   - random
+  - ilist
 
 ghc-options:
   - -Wall
