@@ -8,6 +8,7 @@ import Brick.Widgets.Border
 import Brick.Widgets.Center
 import qualified Graphics.Assets as Assets
 import Graphics.RenderGrid
+import Graphics.RenderMenu
 import Graphics.Vty
 import qualified Logic.Constants as Constants
 import Logic.DataTypes
@@ -18,7 +19,8 @@ initialState :: StdGen -> AppMachine
 initialState initRandGen = Game $ GameState {randGen = initRandGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]}
 
 renderApp :: AppMachine -> [Widget ()]
-renderApp (Game gameState) = (: []) . center . borderWithLabel (str "Snake") . grid Constants.width Constants.height $ gameState
+renderApp (Game gameState) = (: []) . grid Constants.width Constants.height $ gameState
+renderApp (Menu menuState) = (: []) . renderMenu $ menuState
 
 app :: App AppMachine Tick ()
 app =
@@ -31,7 +33,8 @@ app =
         [ (Assets.headAttr, fg brightGreen),
           (Assets.bodyAttr, fg green),
           (Assets.appleAttr, fg red),
-          (Assets.groundAttr, fg white)
+          (Assets.groundAttr, fg white),
+          (Assets.selectedAttr, fg yellow)
         ]
     )
 
@@ -70,7 +73,18 @@ handleGameEvent (GameState {..}) e = do
         else halt
 
 handleMenuEvent :: MenuState -> BrickEvent n Tick -> EventM n AppMachine ()
-handleMenuEvent menuState e = pure ()
+handleMenuEvent (MenuState {..}) e = do
+  let newSelected = case e of
+        VtyEvent (EvKey KUp _) ->
+          if selected - 1 < 0
+            then length menuOptions
+            else selected - 1
+        VtyEvent (EvKey KDown _) ->
+          if selected + 1 < length menuOptions
+            then 0
+            else selected + 1
+        _ -> selected
+  return ()
 
 handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
 handleEvent e = do
