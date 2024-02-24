@@ -3,13 +3,17 @@
 module Graphics.RenderGrid (grid) where
 
 import Brick
+import Brick.Widgets.Border
+import Brick.Widgets.Center
 import Control.Lens
 import qualified Graphics.Assets as Assets
 import Logic.DataTypes
 
 grid :: Int -> Int -> GameState -> Widget ()
 grid width height (GameState {snake, appleCoord = (appleX, appleY)}) =
-  vBox
+  center
+    . borderWithLabel (str "Snake")
+    . vBox
     . map (hBox . map colorStr)
     . addApple
     . snakeToStringArray width height
