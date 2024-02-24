@@ -1,3 +1,5 @@
+{-# LANGUAGE NamedFieldPuns #-}
+
 module Logic.SnakeLogic
   ( growSnake,
     moveSnake,
