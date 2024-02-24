@@ -3,6 +3,7 @@ module Logic.DataTypes
     Direction (North, South, East, West),
     Snake (Snake, direction, coords),
     GameState (GameState, randGen, appleCoord, snake),
+    AppMachine (Game),
     moveCoord,
   )
 where
