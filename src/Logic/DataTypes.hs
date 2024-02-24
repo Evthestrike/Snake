@@ -25,4 +25,6 @@ data Snake = Snake {direction :: Direction, coords :: [Coord]} deriving (Show, R
 
 data GameState = GameState {randGen :: StdGen, appleCoord :: Coord, snake :: Snake}
 
-data AppMachine = Game GameState
+data MenuState = MenuState {}
+
+data AppMachine = Game GameState | Menu MenuState
