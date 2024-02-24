@@ -35,9 +35,7 @@ app =
         ]
     )
 
-handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
-handleEvent e = do
-  (Game (GameState {snake, ..})) <- get
+handleGameEvent (GameState {..}) e = do
   let newSnake = case e of
         AppEvent Tick ->
           if (head . coords . growSnake $ snake) == appleCoord
@@ -69,3 +67,9 @@ handleEvent e = do
       if snakeIsLegal newSnake
         then put newAppState
         else halt
+
+handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
+handleEvent e = do
+  appState <- get
+  case appState of
+    (Game gameState) -> handleGameEvent gameState e
