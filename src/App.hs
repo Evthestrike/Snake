@@ -14,8 +14,6 @@ import Logic.DataTypes
 import Logic.SnakeLogic
 import System.Random
 
-data AppMachine = Game GameState
-
 data Tick = Tick
 
 initialState :: StdGen -> AppMachine
