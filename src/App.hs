@@ -6,20 +6,20 @@ module App (app, initialState) where
 import Brick
 import Brick.Widgets.Border
 import Brick.Widgets.Center
-import qualified Graphics.Assets as Assets
-import Graphics.RenderGrid
-import Graphics.RenderMenu
+import qualified Game.Graphics.Assets
+import Game.Graphics.RenderGrid
+import qualified Game.Logic.Constants
+import Game.Logic.DataTypes
+import Game.Logic.SnakeLogic
 import Graphics.Vty
-import qualified Logic.Constants as Constants
-import Logic.DataTypes
-import Logic.SnakeLogic
+import Menu.Graphics.RenderMenu
 import System.Random
 
 initialState :: StdGen -> AppMachine
 initialState initRandGen = Game $ GameState {randGen = initRandGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]}
 
 renderApp :: AppMachine -> [Widget ()]
-renderApp (Game gameState) = (: []) . grid Constants.width Constants.height $ gameState
+renderApp (Game gameState) = (: []) . grid Game.Logic.Constants.width Game.Logic.Constants.height $ gameState
 renderApp (Menu menuState) = (: []) . renderMenu $ menuState
 
 app :: App AppMachine Tick ()
@@ -30,11 +30,11 @@ app =
     handleEvent
     (return ())
     ( const . attrMap defAttr $
-        [ (Assets.headAttr, fg brightGreen),
-          (Assets.bodyAttr, fg green),
-          (Assets.appleAttr, fg red),
-          (Assets.groundAttr, fg white),
-          (Assets.selectedAttr, fg yellow)
+        [ (Game.Graphics.Assets.headAttr, fg brightGreen),
+          (Game.Graphics.Assets.bodyAttr, fg green),
+          (Game.Graphics.Assets.appleAttr, fg red),
+          (Game.Graphics.Assets.groundAttr, fg white),
+          (Menu.Graphics.Assets.selectedAttr, fg yellow)
         ]
     )
 
@@ -53,8 +53,8 @@ handleGameEvent (GameState {..}) e = do
       (newGen, newAppleCoord) =
         if (head . coords $ newSnake) == appleCoord
           then
-            let (newAppleX, randGen') = uniformR (0, Constants.width - 1) randGen
-                (newAppleY, randGen'') = uniformR (0, Constants.height - 1) randGen'
+            let (newAppleX, randGen') = uniformR (0, Game.Logic.Constants.width - 1) randGen
+                (newAppleY, randGen'') = uniformR (0, Game.Logic.Constants.height - 1) randGen'
              in (randGen'', (newAppleX, newAppleY))
           else (randGen, appleCoord)
       newAppState =

@@ -1,6 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
-module Logic.SnakeLogic
+module Game.Logic.SnakeLogic
   ( growSnake,
     moveSnake,
     snakeIsLegal,
@@ -9,8 +9,8 @@ module Logic.SnakeLogic
 where
 
 import Data.List (nub)
-import qualified Logic.Constants as Constants
-import Logic.DataTypes
+import qualified Game.Logic.Constants
+import Game.Logic.DataTypes
 
 inBounds :: Int -> Int -> Snake -> Bool
 inBounds width height (Snake _ coords) = xInBounds && yInBounds
@@ -23,7 +23,7 @@ noCollisions :: Snake -> Bool
 noCollisions (Snake _ coords) = nub coords == coords
 
 snakeIsLegal :: Snake -> Bool
-snakeIsLegal = (&&) <$> inBounds Constants.width Constants.height <*> noCollisions
+snakeIsLegal = (&&) <$> inBounds Game.Logic.Constants.width Game.Logic.Constants.height <*> noCollisions
 
 growSnake :: Snake -> Snake
 growSnake (Snake direction coords) = Snake direction newCoords

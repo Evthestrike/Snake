@@ -1,11 +1,12 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
-module Graphics.RenderMenu (renderMenu) where
+module Menu.Graphics.RenderMenu (renderMenu) where
 
 import Brick
 import Data.List.Index
-import qualified Graphics.Assets as Assets
-import Logic.DataTypes
+import qualified Game.Graphics.Assets
+import Game.Logic.DataTypes
+import qualified Menu.Graphics.Assets
 
 renderMenu :: MenuState -> Widget n
 renderMenu (MenuState {menuOptions, selected}) =
@@ -13,7 +14,7 @@ renderMenu (MenuState {menuOptions, selected}) =
     . imap
       ( \i x ->
           ( if i == selected
-              then withAttr Assets.selectedAttr
+              then withAttr Menu.Graphics.Assets.selectedAttr
               else id
           )
             . str
@@ -23,5 +24,5 @@ renderMenu (MenuState {menuOptions, selected}) =
     $ menuOptions
 
 optionToString :: MenuOptions -> String
-optionToString Play = Assets.playStr
-optionToString Quit = Assets.quitStr
+optionToString Play = Menu.Graphics.Assets.playStr
+optionToString Quit = Menu.Graphics.Assets.quitStr

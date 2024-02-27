@@ -1,4 +1,4 @@
-module Logic.Constants
+module Game.Logic.Constants
   ( width,
     height,
   )

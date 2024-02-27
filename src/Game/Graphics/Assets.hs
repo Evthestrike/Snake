@@ -1,6 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Graphics.Assets where
+module Game.Graphics.Assets
+  ( headStr,
+    bodyStr,
+    groundStr,
+    appleStr,
+    headAttr,
+    bodyAttr,
+    groundAttr,
+    appleAttr,
+    playStr,
+    quitStr,
+    selectedAttr,
+  )
+where
 
 import Brick
 

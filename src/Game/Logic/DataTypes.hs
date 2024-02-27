@@ -1,4 +1,4 @@
-module Logic.DataTypes
+module Game.Logic.DataTypes
   ( Coord,
     Direction (North, South, East, West),
     Snake (Snake, direction, coords),
