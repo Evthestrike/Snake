@@ -7,6 +7,7 @@ import Data.List.Index
 import qualified Game.Graphics.Assets
 import Game.Logic.DataTypes
 import qualified Menu.Graphics.Assets
+import Menu.Logic.DataTypes
 
 renderMenu :: MenuState -> Widget n
 renderMenu (MenuState {menuOptions, selected}) =
