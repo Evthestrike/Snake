@@ -3,9 +3,6 @@
 module Menu.Graphics.RenderMenu (renderMenu) where
 
 import Brick
-import Data.List.Index
-import qualified Game.Graphics.Assets
-import Game.Logic.DataTypes
 import qualified Menu.Graphics.Assets
 import Menu.Logic.DataTypes
 
