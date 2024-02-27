@@ -12,6 +12,7 @@ import qualified Game.Logic.Constants
 import Game.Logic.DataTypes
 import Game.Logic.SnakeLogic
 import Graphics.Vty
+import qualified Menu.Graphics.Assets
 import Menu.Graphics.RenderMenu
 import System.Random
 
