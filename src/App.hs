@@ -4,8 +4,6 @@
 module App (app, initialState) where
 
 import Brick
-import Brick.Widgets.Border
-import Brick.Widgets.Center
 import DataTypes
 import qualified Game.Graphics.Assets
 import Game.Graphics.RenderGrid
@@ -19,7 +17,7 @@ import Menu.Logic.DataTypes
 import System.Random
 
 initialState :: StdGen -> AppMachine
-initialState initRandGen = Game . defaultGameState
+initialState = Game . Game.Logic.Constants.defaultGameState
 
 renderApp :: AppMachine -> [Widget ()]
 renderApp (Game gameState) = (: []) . grid Game.Logic.Constants.width Game.Logic.Constants.height $ gameState
