@@ -4,6 +4,6 @@ module Menu.Logic.DataTypes
   )
 where
 
-data MenuOption = Play | Quit deriving (Eq, Ord, Enum, Bounded)
+data MenuOption = Play | Quit deriving (Show, Read, Eq, Ord, Enum, Bounded)
 
 data MenuState = MenuState {selected :: MenuOption}
