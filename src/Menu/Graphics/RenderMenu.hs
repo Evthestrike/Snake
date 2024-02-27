@@ -3,6 +3,7 @@
 module Menu.Graphics.RenderMenu (renderMenu) where
 
 import Brick
+import Data.List (unfoldr)
 import qualified Menu.Graphics.Assets
 import Menu.Logic.DataTypes
 
@@ -19,7 +20,8 @@ renderMenu (MenuState {selected}) =
             . optionToString
             $ x
       )
-    $ [Play, Quit]
+    . unfoldr (\x -> if x == maxBound then Nothing else Just (x, succ x))
+    $ Play
 
 optionToString :: MenuOption -> String
 optionToString Play = Menu.Graphics.Assets.playStr
