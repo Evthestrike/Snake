@@ -9,9 +9,6 @@ module Game.Graphics.Assets
     bodyAttr,
     groundAttr,
     appleAttr,
-    playStr,
-    quitStr,
-    selectedAttr,
   )
 where
 
@@ -28,10 +25,3 @@ headAttr = attrName "head"
 bodyAttr = attrName "body"
 groundAttr = attrName "ground"
 appleAttr = attrName "apple"
-
-playStr, quitStr :: String
-playStr = "Play"
-quitStr = "Quit"
-
-selectedAttr :: AttrName
-selectedAttr = attrName "selected"
