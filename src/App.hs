@@ -6,6 +6,7 @@ module App (app, initialState) where
 import Brick
 import Brick.Widgets.Border
 import Brick.Widgets.Center
+import DataTypes
 import qualified Game.Graphics.Assets
 import Game.Graphics.RenderGrid
 import qualified Game.Logic.Constants
@@ -14,6 +15,7 @@ import Game.Logic.SnakeLogic
 import Graphics.Vty
 import qualified Menu.Graphics.Assets
 import Menu.Graphics.RenderMenu
+import Menu.Logic.DataTypes
 import System.Random
 
 initialState :: StdGen -> AppMachine
