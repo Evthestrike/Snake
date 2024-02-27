@@ -5,7 +5,7 @@ import Brick
 import Brick.BChan (newBChan, writeBChan)
 import Control.Concurrent (forkIO, threadDelay)
 import Control.Monad
-import Game.Logic.DataTypes
+import DataTypes
 import System.Random
 
 main :: IO ()
