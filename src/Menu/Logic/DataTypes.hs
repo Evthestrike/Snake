@@ -1,9 +1,9 @@
 module Menu.Logic.DataTypes
-  ( MenuOptions (Play, Quit),
-    MenuState (MenuState, menuOptions, selected),
+  ( MenuOption (Play, Quit),
+    MenuState (MenuState, selected),
   )
 where
 
-data MenuOptions = Play | Quit
+data MenuOption = Play | Quit deriving (Eq, Ord, Enum, Bounded)
 
-data MenuState = MenuState {menuOptions :: [MenuOptions], selected :: Int}
+data MenuState = MenuState {selected :: MenuOption}

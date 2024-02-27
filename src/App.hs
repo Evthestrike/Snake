@@ -75,17 +75,11 @@ handleGameEvent randGen (GameState {..}) e = do
 handleMenuEvent :: StdGen -> MenuState -> BrickEvent n Tick -> EventM n AppMachine ()
 handleMenuEvent randGen (MenuState {..}) e = do
   let newSelected = case e of
-        VtyEvent (EvKey KUp _) ->
-          if selected - 1 < 0
-            then length menuOptions
-            else selected - 1
-        VtyEvent (EvKey KDown _) ->
-          if selected + 1 < length menuOptions
-            then 0
-            else selected + 1
+        VtyEvent (EvKey KUp _) -> pred selected
+        VtyEvent (EvKey KDown _) -> succ selected
         _ -> selected
 
-  put (Menu randGen (MenuState {selected = newSelected, ..}))
+  put (Menu randGen (MenuState {selected = newSelected}))
 
 handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
 handleEvent e = do

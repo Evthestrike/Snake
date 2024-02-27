@@ -10,11 +10,11 @@ import qualified Menu.Graphics.Assets
 import Menu.Logic.DataTypes
 
 renderMenu :: MenuState -> Widget n
-renderMenu (MenuState {menuOptions, selected}) =
+renderMenu (MenuState {selected}) =
   vBox
-    . imap
-      ( \i x ->
-          ( if i == selected
+    . map
+      ( \x ->
+          ( if x == selected
               then withAttr Menu.Graphics.Assets.selectedAttr
               else id
           )
@@ -22,8 +22,8 @@ renderMenu (MenuState {menuOptions, selected}) =
             . optionToString
             $ x
       )
-    $ menuOptions
+    $ [Play, Quit]
 
-optionToString :: MenuOptions -> String
+optionToString :: MenuOption -> String
 optionToString Play = Menu.Graphics.Assets.playStr
 optionToString Quit = Menu.Graphics.Assets.quitStr
