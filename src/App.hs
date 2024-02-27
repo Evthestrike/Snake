@@ -19,7 +19,7 @@ import Menu.Logic.DataTypes
 import System.Random
 
 initialState :: StdGen -> AppMachine
-initialState initRandGen = Game $ GameState {randGen = initRandGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]}
+initialState initRandGen = Game . defaultGameState
 
 renderApp :: AppMachine -> [Widget ()]
 renderApp (Game gameState) = (: []) . grid Game.Logic.Constants.width Game.Logic.Constants.height $ gameState
