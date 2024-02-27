@@ -84,7 +84,8 @@ handleMenuEvent randGen (MenuState {..}) e = do
             then 0
             else selected + 1
         _ -> selected
-  return ()
+
+  put (Menu randGen (MenuState {selected = newSelected, ..}))
 
 handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
 handleEvent e = do
