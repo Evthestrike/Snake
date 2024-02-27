@@ -2,13 +2,12 @@ module Game.Logic.DataTypes
   ( Coord,
     Direction (North, South, East, West),
     Snake (Snake, direction, coords),
-    GameState (GameState, randGen, appleCoord, snake),
+    GameState (GameState, appleCoord, snake),
     moveCoord,
   )
 where
 
 import Data.Bifunctor (Bifunctor (first, second))
-import System.Random
 
 type Coord = (Int, Int)
 
@@ -22,4 +21,4 @@ moveCoord West = first (+ (-1))
 
 data Snake = Snake {direction :: Direction, coords :: [Coord]} deriving (Show, Read)
 
-data GameState = GameState {randGen :: StdGen, appleCoord :: Coord, snake :: Snake}
+data GameState = GameState {appleCoord :: Coord, snake :: Snake}

@@ -17,11 +17,11 @@ import Menu.Logic.DataTypes
 import System.Random
 
 initialState :: StdGen -> AppMachine
-initialState = Game . Game.Logic.Constants.defaultGameState
+initialState randGen = Game randGen Game.Logic.Constants.defaultGameState
 
 renderApp :: AppMachine -> [Widget ()]
-renderApp (Game gameState) = (: []) . grid Game.Logic.Constants.width Game.Logic.Constants.height $ gameState
-renderApp (Menu menuState) = (: []) . renderMenu $ menuState
+renderApp (Game _ gameState) = (: []) . grid Game.Logic.Constants.width Game.Logic.Constants.height $ gameState
+renderApp (Menu _ menuState) = (: []) . renderMenu $ menuState
 
 app :: App AppMachine Tick ()
 app =
@@ -39,8 +39,8 @@ app =
         ]
     )
 
-handleGameEvent :: GameState -> BrickEvent n Tick -> EventM n AppMachine ()
-handleGameEvent (GameState {..}) e = do
+handleGameEvent :: StdGen -> GameState -> BrickEvent n Tick -> EventM n AppMachine ()
+handleGameEvent randGen (GameState {..}) e = do
   let newSnake = case e of
         AppEvent Tick ->
           if (head . coords . growSnake $ snake) == appleCoord
@@ -59,10 +59,9 @@ handleGameEvent (GameState {..}) e = do
              in (randGen'', (newAppleX, newAppleY))
           else (randGen, appleCoord)
       newAppState =
-        Game $
+        Game newGen $
           GameState
-            { randGen = newGen,
-              appleCoord = newAppleCoord,
+            { appleCoord = newAppleCoord,
               snake = newSnake
             }
 
@@ -73,8 +72,8 @@ handleGameEvent (GameState {..}) e = do
         then put newAppState
         else halt
 
-handleMenuEvent :: MenuState -> BrickEvent n Tick -> EventM n AppMachine ()
-handleMenuEvent (MenuState {..}) e = do
+handleMenuEvent :: StdGen -> MenuState -> BrickEvent n Tick -> EventM n AppMachine ()
+handleMenuEvent randGen (MenuState {..}) e = do
   let newSelected = case e of
         VtyEvent (EvKey KUp _) ->
           if selected - 1 < 0
@@ -91,5 +90,5 @@ handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
 handleEvent e = do
   appState <- get
   case appState of
-    (Game gameState) -> handleGameEvent gameState e
-    (Menu menuState) -> handleMenuEvent menuState e
+    (Game randGen gameState) -> handleGameEvent randGen gameState e
+    (Menu randGen menuState) -> handleMenuEvent randGen menuState e

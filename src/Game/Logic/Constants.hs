@@ -6,7 +6,6 @@ module Game.Logic.Constants
 where
 
 import Game.Logic.DataTypes
-import System.Random (StdGen)
 
 width :: Int
 width = 12
@@ -14,5 +13,5 @@ width = 12
 height :: Int
 height = 12
 
-defaultGameState :: StdGen -> GameState
-defaultGameState initRandGen = GameState {randGen = initRandGen, appleCoord = (1, 1), snake = Snake East [(0, 0)]}
+defaultGameState :: GameState
+defaultGameState = GameState {appleCoord = (1, 1), snake = Snake East [(0, 0)]}

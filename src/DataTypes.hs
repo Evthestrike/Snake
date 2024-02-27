@@ -9,11 +9,12 @@ where
 import qualified Game.Logic.Constants
 import Game.Logic.DataTypes
 import Menu.Logic.DataTypes
+import System.Random
 
 data Tick = Tick
 
-data AppMachine = Game GameState | Menu MenuState
+data AppMachine = Game StdGen GameState | Menu StdGen MenuState
 
 newGame :: AppMachine -> AppMachine
-newGame (Game (GameState {randGen})) = Game . Game.Logic.Constants.defaultGameState $ randGen
-newGame (Menu (MenuState {randGen})) = Game . Game.Logic.Constants.defaultGameState $ randGen
+newGame (Game randGen _) = Game randGen Game.Logic.Constants.defaultGameState
+newGame (Menu randGen _) = Game randGen Game.Logic.Constants.defaultGameState
