@@ -3,19 +3,22 @@
 module Menu.Graphics.RenderMenu (renderMenu) where
 
 import Brick
-import Data.List (unfoldr)
-import qualified Menu.Graphics.Assets
+import Brick.Widgets.Border
+import Brick.Widgets.Center
+import qualified Menu.Graphics.Assets as Assets
 import Menu.Logic.DataTypes
 
 renderMenu :: MenuState -> Widget n
 renderMenu (MenuState {selected}) =
-  vBox
+  center
+    . vBox
     . map
       ( \x ->
           ( if x == selected
-              then withAttr Menu.Graphics.Assets.selectedAttr
+              then withAttr Assets.selectedAttr
               else id
           )
+            . border
             . str
             . optionToString
             $ x
@@ -23,5 +26,7 @@ renderMenu (MenuState {selected}) =
     $ [minBound .. maxBound]
 
 optionToString :: MenuOption -> String
-optionToString Play = Menu.Graphics.Assets.playStr
-optionToString Quit = Menu.Graphics.Assets.quitStr
+optionToString Play = Assets.playStr
+optionToString Options = Assets.optionsStr
+optionToString Leaderboard = Assets.leaderboardStr
+optionToString Quit = Assets.quitStr

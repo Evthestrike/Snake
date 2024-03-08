@@ -1,12 +1,12 @@
 module Menu.Logic.DataTypes
-  ( MenuOption (Play, Quit),
+  ( MenuOption (Play, Options, Leaderboard, Quit),
     MenuState (MenuState, selected),
     wrapSucc,
     wrapPred,
   )
 where
 
-data MenuOption = Play | Quit deriving (Show, Read, Eq, Ord, Enum, Bounded)
+data MenuOption = Play | Options | Leaderboard | Quit deriving (Show, Read, Eq, Ord, Enum, Bounded)
 
 wrapSucc :: (Eq a, Bounded a, Enum a) => a -> a
 wrapSucc o =
