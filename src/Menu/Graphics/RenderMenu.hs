@@ -20,8 +20,7 @@ renderMenu (MenuState {selected}) =
             . optionToString
             $ x
       )
-    . unfoldr (\x -> if x == maxBound then Nothing else Just (x, succ x))
-    $ Play
+    $ [minBound .. maxBound]
 
 optionToString :: MenuOption -> String
 optionToString Play = Menu.Graphics.Assets.playStr

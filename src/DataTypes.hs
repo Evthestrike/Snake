@@ -3,6 +3,8 @@
 module DataTypes
   ( Tick (Tick),
     AppMachine (Game, Menu),
+    newGame,
+    quitGame,
   )
 where
 
@@ -22,3 +24,4 @@ newGame (Menu randGen _) = Game randGen Game.Logic.Constants.defaultGameState
 
 quitGame :: AppMachine -> AppMachine
 quitGame (Game randGen _) = Menu randGen Menu.Logic.Constants.defaultMenu
+quitGame (Menu randGen _) = Menu randGen Menu.Logic.Constants.defaultMenu

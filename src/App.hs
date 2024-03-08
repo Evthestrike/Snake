@@ -70,16 +70,21 @@ handleGameEvent randGen (GameState {..}) e = do
     _ ->
       if snakeIsLegal newSnake
         then put newAppState
-        else halt
+        else put . quitGame $ newAppState
 
 handleMenuEvent :: StdGen -> MenuState -> BrickEvent n Tick -> EventM n AppMachine ()
 handleMenuEvent randGen (MenuState {..}) e = do
   let newSelected = case e of
-        VtyEvent (EvKey KUp _) -> pred selected
-        VtyEvent (EvKey KDown _) -> succ selected
+        VtyEvent (EvKey KUp _) -> wrapPred selected
+        VtyEvent (EvKey KDown _) -> wrapSucc selected
         _ -> selected
+      newMenuState = (Menu randGen (MenuState {selected = newSelected}))
 
-  put (Menu randGen (MenuState {selected = newSelected}))
+  case e of
+    VtyEvent (EvKey KEnter _) -> case newSelected of
+      Play -> put . newGame $ newMenuState
+      Quit -> halt
+    _ -> put newMenuState
 
 handleEvent :: BrickEvent n Tick -> EventM n AppMachine ()
 handleEvent e = do
