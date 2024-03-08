@@ -16,10 +16,14 @@ renderMenu (MenuState {selected}) =
     . ((hCenter . str $ Assets.titleStr) :)
     . map
       ( \x ->
-          ( if x == selected
-              then withAttr Assets.selectedAttr
+          ( if x == Leaderboard || x == Options
+              then withAttr Assets.disabledAttr
               else id
           )
+            . ( if x == selected
+                  then withAttr Assets.selectedAttr
+                  else id
+              )
             . border
             . hCenter
             . str

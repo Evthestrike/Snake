@@ -5,6 +5,7 @@ module Menu.Graphics.Assets
     leaderboardStr,
     quitStr,
     selectedAttr,
+    disabledAttr,
   )
 where
 
@@ -21,3 +22,6 @@ quitStr = "Quit"
 
 selectedAttr :: AttrName
 selectedAttr = attrName "selected"
+
+disabledAttr :: AttrName
+disabledAttr = attrName "disabled"
