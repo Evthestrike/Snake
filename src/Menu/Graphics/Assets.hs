@@ -1,5 +1,6 @@
 module Menu.Graphics.Assets
-  ( playStr,
+  ( titleStr,
+    playStr,
     optionsStr,
     leaderboardStr,
     quitStr,
@@ -8,6 +9,9 @@ module Menu.Graphics.Assets
 where
 
 import Brick
+
+titleStr :: String
+titleStr = "                 _       \n                | |       \n ___ _ __   __ _| | _____ \n/ __| '_ \\ / _` | |/ / _ \\\n\\__ \\ | | | (_| |   <  __/\n|___/_| |_|\\__,_|_|\\_\\___|\n\n"
 
 playStr, optionsStr, leaderboardStr, quitStr :: String
 playStr = "Play"

@@ -11,7 +11,9 @@ import Menu.Logic.DataTypes
 renderMenu :: MenuState -> Widget n
 renderMenu (MenuState {selected}) =
   center
+    . hLimit ((+ 1) . length . head . lines $ Assets.titleStr)
     . vBox
+    . ((hCenter . str $ Assets.titleStr) :)
     . map
       ( \x ->
           ( if x == selected
@@ -19,6 +21,7 @@ renderMenu (MenuState {selected}) =
               else id
           )
             . border
+            . hCenter
             . str
             . optionToString
             $ x
