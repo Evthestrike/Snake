@@ -8,10 +8,10 @@ where
 import Game.Logic.DataTypes
 
 width :: Int
-width = 12
+width = 16
 
 height :: Int
-height = 12
+height = 17
 
 defaultGameState :: GameState
 defaultGameState = GameState {appleCoord = (1, 1), snake = Snake East [(0, 0)]}

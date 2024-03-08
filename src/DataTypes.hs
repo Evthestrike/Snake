@@ -1,5 +1,3 @@
-{-# LANGUAGE NamedFieldPuns #-}
-
 module DataTypes
   ( Tick (Tick),
     AppMachine (Game, Menu),

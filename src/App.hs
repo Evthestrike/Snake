@@ -31,7 +31,7 @@ app =
         [ (Game.Graphics.Assets.headAttr, fg brightGreen),
           (Game.Graphics.Assets.bodyAttr, fg green),
           (Game.Graphics.Assets.appleAttr, fg red),
-          (Game.Graphics.Assets.groundAttr, fg white),
+          (Game.Graphics.Assets.groundAttr, fg brightBlack),
           (Menu.Graphics.Assets.selectedAttr, fg yellow),
           (Menu.Graphics.Assets.disabledAttr, style dim)
         ]
